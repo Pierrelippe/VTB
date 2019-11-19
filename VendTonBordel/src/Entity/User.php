@@ -9,8 +9,12 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
+ * @UniqueEntity(
+ *    fields={"username"},
+ *    message="Le nom que vous avez indiqué a déja été utilisé"
+ *)
  */
-class User
+class User implements  UserInterface
 {
     /**
      * @ORM\Id()
@@ -48,7 +52,24 @@ class User
      * @Assert\EqualTo(propertyPath="password",message="Vous n'avez pas entré 2 fois le même mot de passe")
      */
 
-    private $confirmPassword;
+    public $confirmPassword;
+
+    /**
+     * @return mixed
+     */
+    public function getConfirmPassword()
+    {
+        return $this->confirmPassword;
+    }
+
+    /**
+     * @param mixed $confirmPassword
+     */
+    public function setConfirmPassword($confirmPassword)
+    {
+        $this->confirmPassword = $confirmPassword;
+    }
+
     /**
      * @ORM\Column(type="string", length=255)
      */
@@ -112,20 +133,7 @@ class User
         return $this;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getConfirmPassword()
-    {
-        return $this->confirmPassword;
-    }
-    /**
-     * @param mixed $confirmPassword
-     */
-    public function setConfirmPassword($confirmPassword)
-    {
-        $this->confirmPassword = $confirmPassword;
-    }
+
     public function getEmail(): ?string
     {
         return $this->email;
@@ -149,4 +157,8 @@ class User
 
         return $this;
     }
+
+    public function eraseCredentials(){}
+    public function getSalt(){}
+    public function getRoles(){ return ['ROLE_USER'];}
 }

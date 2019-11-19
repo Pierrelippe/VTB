@@ -12,14 +12,17 @@
         <img src="/image/Logo.png" class="logo">
         <h1 id="VTB">VendTonBordel</h1>
         <div class="inscriptions_texts_block">
+
             <form action="{{ path('homepage') }}" method="post" class="">
                 <label for="username" class="d-block"><b>Username</b></label>
-                <input class="px-2" type="text" name="username" placeholder="Username ?"maxlength="15"><br>
+                <input class="px-2"  placeholder="Username" required name="_username" type="text"><br>
                 <label for="password"class="d-block mt-3"><b>Password</b></label>
-                <input class="px-2" type="password" name="password" placeholder="Password"maxlength="50"><br>
+                <input class="px-2" placeholder="Mot de passe" required name="_password" type="password"><br>
+
                 <button type="submit" class="mt-2 btn btn-primary ml-5"> Connexion </button>
+
                 <a href="index.html.twig" class="d-block">You forgot your password</a>
-                <a href="index.html.twig">Register </a>
+                <a href={{ path("security_registration") }}>Register </a>
             </form>
 
         </div>

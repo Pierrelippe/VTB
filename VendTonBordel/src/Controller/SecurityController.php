@@ -13,14 +13,14 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 class SecurityController extends AbstractController
 {
     /**
-     * @Route("/inscription", name="security_registration")
+     * @Route("/register", name="security_registration")
      */
     public function registration(Request $request, ObjectManager $manager,UserPasswordEncoderInterface $encoder)
     {
         $user=new User();
         //Créer les formulaires pour le twig
         $form =$this->createForm(RegistrationType::class, $user);
-        //Prend les requête mis dans le twig
+       //Prend les requête mis dans le twig
         $form->handleRequest($request);
         //Si le formulaire est Submit et les termes ont bien été remplie
         if($form->isSubmitted() && $form->isValid())
@@ -31,6 +31,8 @@ class SecurityController extends AbstractController
             //On le met sur la base de donnée
             $manager->persist($user);
             $manager->flush();
+            return $this->redirectToRoute('security_login');
+
         }
         return $this->render('security/registration.html.twig', [
             'controller_name' => 'Registration',
@@ -52,4 +54,7 @@ class SecurityController extends AbstractController
      * @Route("/logout", name="security_logout")
      */
     public function logout(){}
+
+
+
 }
