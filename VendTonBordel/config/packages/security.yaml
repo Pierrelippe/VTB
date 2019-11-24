@@ -19,6 +19,7 @@ security:
             form_login:
                 login_path: homepage
                 check_path: homepage
+                default_target_path: user_profil
 
             logout:
                 path: security_logout

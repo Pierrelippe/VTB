@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Update Profil{% endblock %}
+
+{% block body %}
+
+<div class="container">
+    <div class="card p-3">
+        <div class="row">
+            <h1 class="mx-auto card-header">Update</h1>
+        </div>
+
+        <div class="d-block mx-3">
+            {{ form_start(form) }}
+            {{ form_row(form.name,{'label':'Name','attr':{ 'placeholder':'Name' }})}}
+            {{ form_row(form.lastname,{'label':'Lastname','attr':{ 'placeholder':'Lastname' }})}}
+            {{ form_row(form.email,{'label':'Email','attr':{ 'placeholder':'Name' }})}}
+            {{ form_row(form.username,{'label':'Username','attr':{ 'placeholder':'Username' }})}}
+            {{ form_row(form.phone,{'label':'Phone Number','attr':{ 'placeholder':'Ton 06 Wsh' }})}}
+            <button type="submit"  class="btn btn-outline-primary mb-3" >Modifier</button>
+            {{ form_end(form) }}
+            <a class="mt-3" href={{ path("profil_update_password") }}>Modifies ton password</a>
+
+        </div>
+    </div>
+</div>
+{% endblock %}

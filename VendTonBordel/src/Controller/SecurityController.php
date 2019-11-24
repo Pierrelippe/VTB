@@ -31,7 +31,7 @@ class SecurityController extends AbstractController
             //On le met sur la base de donnée
             $manager->persist($user);
             $manager->flush();
-            return $this->redirectToRoute('security_login');
+            return $this->redirectToRoute('homepage');
 
         }
         return $this->render('security/registration.html.twig', [
@@ -45,9 +45,7 @@ class SecurityController extends AbstractController
      */
     public function login(){
 
-        return $this->render('security/login.html.twig', [
-            'controller_name' => 'LogIn',
-        ]);
+        return $this->render('/');
     }
 
     /**

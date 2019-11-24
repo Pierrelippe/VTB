@@ -12,8 +12,16 @@ class HomepageController extends AbstractController
      */
     public function index()
     {
+
+        if ($this->getUser()!= null) {
+
+           return $this->redirectToRoute('user_profil');
+        }
+
         return $this->render('homepage/index.html.twig', [
             'controller_name' => 'HomepageController',
         ]);
+
+
     }
 }

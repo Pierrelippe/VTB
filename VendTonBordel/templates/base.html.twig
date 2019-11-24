@@ -9,6 +9,22 @@
         {% endblock %}
     </head>
     <body>
+    {% block navbar %}
+    <nav class="navbar">
+        <ul class="navbar-nav ">
+            {% if not app.user %}
+                <li>
+                    <a class="nav-link d-inline" href="{{ path('security_login') }}">LogIn</a>
+                </li>
+            {% else %}
+                <li>
+                    <a class="nav-link d-inline" href="{{ path('security_logout') }}">LogOut</a>
+                </li>
+            {% endif %}
+        </ul>
+    </nav>
+    {% endblock %}
+
         {% block body %}{% endblock %}
         {% block javascripts %}{% endblock %}
     </body>

@@ -77,6 +77,13 @@ class User implements  UserInterface
 
     /**
      * @ORM\Column(type="string", length=10, nullable=true)
+     * @Assert\Length(
+     *      min=10,
+     *      max=10,
+     *      minMessage="Votre numéro doit avoir 10 chiffres",
+     *      minMessage="Votre numéro doit avoir 10 chiffres",
+     *
+     * )
      */
     private $phone;
 
