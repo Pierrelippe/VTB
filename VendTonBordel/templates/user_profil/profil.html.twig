@@ -2,12 +2,12 @@
 
 {% block title %}Profil{% endblock %}
 
-
 {% block body %}
 
     <div class="container">
-        <div class="card mx-auto col-8">
-             <h1 class="mx-auto card-header">Profil</h1>
+        <div class="card mx-auto col-8 mt-4 border-primary">
+             <h1 class="mx-auto card-header mt-2 border-bottom border-primary rounded">Profil</h1>
+             <img src={{ User.profilPhoto.link }}>
 
                 <div class="mx-auto my-5">
                     <div class="d-block">
