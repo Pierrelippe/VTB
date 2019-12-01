@@ -5,6 +5,7 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\PhotoRepository")
@@ -20,6 +21,10 @@ class Photo
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\File(
+     *     mimeTypes = {"image/png", "image/jpeg"},
+     *     mimeTypesMessage = "Mettez une image valide"
+     * )
      */
     private $link;
 
@@ -27,6 +32,11 @@ class Photo
      * @ORM\OneToMany(targetEntity="App\Entity\User", mappedBy="profilPhoto")
      */
     private $User_photo;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Annonces", inversedBy="photo")
+     */
+    private $AnnoncePhoto;
 
     public function __construct()
     {
@@ -38,12 +48,12 @@ class Photo
         return $this->id;
     }
 
-    public function getLink(): ?string
+    public function getLink()
     {
         return $this->link;
     }
 
-    public function setLink(string $link): self
+    public function setLink($link)
     {
         $this->link = $link;
 
@@ -77,6 +87,18 @@ class Photo
                 $userPhoto->setProfilPhoto(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getAnnoncePhoto(): ?Annonces
+    {
+        return $this->AnnoncePhoto;
+    }
+
+    public function setAnnoncePhoto(?Annonces $AnnoncePhoto): self
+    {
+        $this->AnnoncePhoto = $AnnoncePhoto;
 
         return $this;
     }

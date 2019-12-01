@@ -5,24 +5,22 @@
 
 {% block body %}
 
-<div class="container">
-    <div class="card p-3">
-        <div class="row">
-            <h1 class="mx-auto card-header">Update</h1>
-        </div>
+    <div class="container">
+        <div class="card mx-auto col-8 mt-4 mb-4 border-primary">
 
-        <div class="d-block mx-3">
-            {{ form_start(form) }}
-            {{ form_row(form.name,{'label':'Name','attr':{ 'placeholder':'Name' }})}}
-            {{ form_row(form.lastname,{'label':'Lastname','attr':{ 'placeholder':'Lastname' }})}}
-            {{ form_row(form.email,{'label':'Email','attr':{ 'placeholder':'Name' }})}}
-            {{ form_row(form.username,{'label':'Username','attr':{ 'placeholder':'Username' }})}}
-            {{ form_row(form.phone,{'label':'Phone Number','attr':{ 'placeholder':'Ton 06 Wsh' }})}}
-            <button type="submit"  class="btn btn-outline-primary mb-3" >Modifier</button>
-            {{ form_end(form) }}
-            <a class="mt-3" href={{ path("profil_update_password") }}>Modifies ton password</a>
+            <h1 class="mx-auto card-header mt-2 mb-5 border-bottom border-primary rounded">Update Profil</h1>
 
+            <div class="d-block ">
+                {{ form_start(form) }}
+                {{ form_row(form.name,{'label':'Name','attr':{ 'placeholder':'Name' }})}}
+                {{ form_row(form.lastname,{'label':'Lastname','attr':{ 'placeholder':'Lastname' }})}}
+                {{ form_row(form.email,{'label':'Email','attr':{ 'placeholder':'Name' }})}}
+                {{ form_row(form.username,{'label':'Username','attr':{ 'placeholder':'Username' }})}}
+                {{ form_row(form.phone,{'label':'Phone Number','attr':{ 'placeholder':'Ton 06 Wsh' }})}}
+                <button type="submit"  class="btn btn-outline-primary mb-3 " >Modifier</button>
+                {{ form_end(form) }}
+
+            </div>
         </div>
     </div>
-</div>
 {% endblock %}

@@ -5,12 +5,18 @@
 
 {% block body %}
     <div class="container">
-        <div class="d-block ">
-            {{ form_start(form) }}
-            {{ form_row(form.link)}}
-            <button type="submit"  class="btn btn-outline-success" >Modifier</button>
-            {{ form_end(form) }}
+        <div class="card mx-auto col-8 mt-4 mb-4 border-primary">
+            <h1 class="mx-auto card-header mt-2 mb-5 border-bottom border-primary rounded">Update Photo</h1>
+            <div class="d-block ">
+                {{ form_start(form) }}
+                <div class="" style="height: 40px; width:200px;">
+                    {{ form_row(form.link)}}
+                </div>
+                <div><img class="avatarImg m-5" src=/image/photo/{{ User.profilPhoto.link }}></div>
+                <button type="submit"  class="btn btn-outline-primary my-3 d-block" >Modifier</button>
+                {{ form_end(form) }}
 
+            </div>
         </div>
     </div>
 {% endblock %}

@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -87,6 +89,21 @@ class User implements  UserInterface
      */
     private $phone;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Annonces", mappedBy="user")
+     */
+    private $annonce;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Photo", inversedBy="User_photo")
+     */
+    private $profilPhoto;
+
+    public function __construct()
+    {
+        $this->annonce = new ArrayCollection();
+    }
+
     public function getId(): ?int
     {
         return $this->id;
@@ -164,8 +181,49 @@ class User implements  UserInterface
 
         return $this;
     }
+    public function getProfilPhoto(): ?Photo
+    {
+        return $this->profilPhoto;
+    }
 
+    public function setProfilPhoto(?Photo $profilPhoto): self
+    {
+        $this->profilPhoto = $profilPhoto;
+
+        return $this;
+    }
     public function eraseCredentials(){}
     public function getSalt(){}
     public function getRoles(){ return ['ROLE_USER'];}
+
+    /**
+     * @return Collection|Annonces[]
+     */
+    public function getAnnonce(): Collection
+    {
+        return $this->annonce;
+    }
+
+    public function addAnnonce(Annonces $annonce): self
+    {
+        if (!$this->annonce->contains($annonce)) {
+            $this->annonce[] = $annonce;
+            $annonce->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAnnonce(Annonces $annonce): self
+    {
+        if ($this->annonce->contains($annonce)) {
+            $this->annonce->removeElement($annonce);
+            // set the owning side to null (unless already changed)
+            if ($annonce->getUser() === $this) {
+                $annonce->setUser(null);
+            }
+        }
+
+        return $this;
+    }
 }

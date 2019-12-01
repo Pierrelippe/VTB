@@ -5,15 +5,50 @@
 {% block body %}
 
     <div class="container">
-        <ul>
-            <li>
-                <div class="card mx-auto col-8 mt-4 mb-4 border-primary">
-                    <h1 class="mx-auto card-header mt-2 mb-5 border-bottom border-primary rounded">Annonces</h1>
+        <div>
+            <ul>
+                <li>
 
+                        <h1 class="mx-auto card-header mt-2 mb-5 border-bottom border-primary rounded text-center">Annonces</h1>
+                        {%for a in annonces%}
+                            <div class="card mx-auto col-8 mt-4 my-4 border-primary">
+                                <p class="mx-auto mt-3">{{ a.name }}</p>
+                                <p class="mx-auto">{{ a.description}}</p>
+                                <p class="mx-auto">{{ a.prix}} €</p>
+                                <p class="mx-auto">{{ a.categorie.name}}</p>
+                                <!-- Photos -->
+                            </div>
 
+                        {% endfor %}
+                </li>
+            </ul>
+        </div>
+
+        {% if app.user %}
+        <div class="mx-auto">
+                <!-- Modal Button -->
+
+                <button type="button" class="btn btn-outline-primary my-3"  data-toggle="modal" data-target="#newAnnonceModal">Ajouter</button>
+
+                <!-- Modal -->
+                <div class="modal fade" id="newAnnonceModal" tabindex="-1" role="dialog" aria-labelledby="newAnnonceModalTitle" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="newAnnonceModalTitle">Nouvelle Annonce</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                {{ form(form) }}
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            </li>
-        </ul>
+            {% endif %}
+        </div>
+
     </div>
 
 {% endblock %}

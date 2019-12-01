@@ -2,27 +2,24 @@
 
 namespace App\Form;
 
-use App\Entity\Photo;
+use App\Entity\Categories;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class PhotoType extends AbstractType
+class CategoriesType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('link',FileType::class,array(
-                'label'=>"Insérer votre image"
-            ))
+            ->add('name')
         ;
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => Photo::class,
+            'data_class' => Categories::class,
         ]);
     }
 }

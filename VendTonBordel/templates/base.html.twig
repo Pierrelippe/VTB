@@ -1,45 +1,50 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8">
-        <!-- Titre et Icone -->
-        {% block icon %} <link rel="icon" type="image/png" href="/image/Icone.png" >{% endblock %}
-        <title>{% block title %}Welcome!{% endblock %}</title>
+<head>
+    <meta charset="UTF-8">
+    <!-- Titre et Icone -->
+    {% block icon %} <link rel="icon" type="image/png" href="/image/Icone.png" >{% endblock %}
+    <title>{% block title %}Welcome!{% endblock %}</title>
 
-        <!-- Css -->
-        {% block stylesheets %}
-            <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
-            <link rel="stylesheet" href="{{ asset('/css/GlobalStyle.css') }}">
-        {% endblock %}
-    </head>
-    <body>
-
-
-     <!-- Navbar Bootstrap -->
-     {% block navbar %}
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <a class="navbar-brand" href="{{ path("user_profil") }}">VTB</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav ">
-
-                    {% if not app.user %}
-                        <li class="nav-item">
-                            <a class="nav-link d-inline" href="{{ path('security_login') }}">LogIn</a>
-                        </li>
-                    {% else %}
-                        <li class="nav-item">
-                            <a class="nav-link d-inline" href="{{ path('security_logout') }}">LogOut</a>
-                        </li>
-                    {% endif %}
-                </ul>
-            </div>
-        </nav>
+    <!-- Css -->
+    {% block stylesheets %}
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">        <link rel="stylesheet" href="{{ asset('/css/GlobalStyle.css') }}">
     {% endblock %}
+    <!-- Font -->
+    <link href="https://fonts.googleapis.com/css?family=Alatsi&display=swap" rel="stylesheet">
+</head>
+<body>
 
-        {% block body %}{% endblock %}
-        {% block javascripts %}{% endblock %}
-    </body>
+
+<!-- Navbar Bootstrap -->
+{% block navbar %}
+    <nav class="navbar navbar-expand-lg navbar-style navbar-dark sticky-top " >
+        <a class="navbar-brand" href="{{ path("annonces") }}">VTB</a>
+        <ul class="navbar-nav d-inline">
+
+            {% if not app.user %}
+                <li class="nav-item d-inline">
+                    <a class="nav-link d-inline" href="{{ path('homepage') }}">LogIn</a>
+                </li>
+            {% else %}
+                <li class="nav-item d-inline ">
+                    <a class="nav-link d-inline" href="{{ path('user_profil') }}">Mon Profil</a>
+                </li>
+                <li class="nav-item mx-3 d-inline">
+                    <a class="nav-link d-inline" href="{{ path('security_logout') }}">LogOut</a>
+                </li>
+            {% endif %}
+        </ul>
+
+    </nav>
+{% endblock %}
+
+{% block body %}{% endblock %}
+{% block javascripts %}
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+{% endblock %}
+</body>
 </html>

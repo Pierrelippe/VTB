@@ -6,9 +6,9 @@
 {% block navbar %}{% endblock %}
 {% block body %}
 
-<div class="background_1 "></div>
-<div class="background_2 "></div>
-<div class="background_3 "></div>
+    <div class="background_1 "></div>
+    <div class="background_2 "></div>
+    <div class="background_3 "></div>
 
 
     <div class="texts">
@@ -24,8 +24,7 @@
 
                 <button type="submit" class="mt-2 btn btn-primary ml-5"> Connexion </button>
 
-                <a href="index.html.twig" class="d-block">You forgot your password</a>
-                <a href={{ path("security_registration") }}>Register </a>
+                <a class="d-block mt-2" href={{ path("security_registration") }}>Tu n'as pas de compte ? </a>
             </form>
 
         </div>

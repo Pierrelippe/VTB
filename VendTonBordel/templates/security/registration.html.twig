@@ -5,22 +5,27 @@
 
 {% block body %}
 
-    <h1 class="display-4  py-5 text-center"> {{ controller_name }}</h1>
 
     <div class="container">
-        <div class="d-block ">
-            {{ form_start(form) }}
-            {{ form_row(form.name,{'label':'Name','attr':{ 'placeholder':'Name' }})}}
-            {{ form_row(form.lastname,{'label':'Lastname','attr':{ 'placeholder':'Lastname' }})}}
-            {{ form_row(form.email,{'label':'Email','attr':{ 'placeholder':'Name' }})}}
-            {{ form_row(form.phone,{'label':'Phone Number','attr':{ 'placeholder':'Ton 06 Wsh' }})}}
-            {{ form_row(form.username,{'label':'Username','attr':{ 'placeholder':'Username' }})}}
-            {{ form_row(form.password,{'label':'Password','attr':{ 'placeholder':'Password' }})}}
-            {{ form_row(form.confirmPassword,{'label':'Confirm Password','attr':{ 'placeholder':'Confirm your Password' }})}}
+        <div class="card mx-auto col-8 mt-4 mb-4 border-primary">
 
+            <h1 class="mx-auto card-header mt-2 mb-5 border-bottom border-primary rounded"> Registration</h1>
+            <div class="d-block mx-4">
 
-            <button type="submit"  class="btn btn-outline-success" >Inscription</button>
-            {{ form_end(form) }}
+                <!-- Form User-->
+                {{ form_start(form) }}
+                {{ form_row(form.name,{'label':'Name','attr':{ 'placeholder':'Name' }})}}
+                {{ form_row(form.lastname,{'label':'Lastname','attr':{ 'placeholder':'Lastname' }})}}
+                {{ form_row(form.email,{'label':'Email','attr':{ 'placeholder':'Name' }})}}
+                {{ form_row(form.phone,{'label':'Phone Number','attr':{ 'placeholder':'Ton 06 Wsh' }})}}
+                {{ form_row(form.username,{'label':'Username','attr':{ 'placeholder':'Username' }})}}
+                {{ form_row(form.password,{'label':'Password','attr':{ 'placeholder':'Password' }})}}
+                {{ form_row(form.confirmPassword,{'label':'Confirm Password','attr':{ 'placeholder':'Confirm your Password' }})}}
+
+                <button type="submit"  class="btn btn-outline-primary mb-3" >Inscription</button>
+                {{ form_end(form) }}
+
+            </div>
         </div>
 
     </div>

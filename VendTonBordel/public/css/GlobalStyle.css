@@ -1,3 +1,22 @@
 p,h1,li,a{
-    font-family: 'Arvo', serif;
+    font-family: 'Alatsi', sans-serif;
 }
+li{
+    list-style-type: none;
+}
+/* Css d'avatar*/
+.avatarImg
+{
+    object-fit: contain;
+    border-radius:50%;
+    width: 80px;
+    heigth: 80px;
+
+}
+/* Css de la navbar */
+.navbar-style{
+    background-color: rgb(140, 206, 255);
+    color: white;
+}
+
+
