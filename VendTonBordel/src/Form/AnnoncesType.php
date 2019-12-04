@@ -7,6 +7,8 @@ use App\Entity\Categories;
 use App\Entity\Photo;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -38,15 +40,21 @@ class AnnoncesType extends AbstractType
                 // 'expanded' => true,
 
             ])
+           ->add('phototek',FileType::class, [
+               'mapped' => false,
+           ])
+        /*    ->add('photo',CollectionType::class,  array(
+                'entry_type'   => PhotoType::class,
+            ))*/
 
-          /*  ->add('photo',EntityType::class,[
+        /*EntityType::class,[
                 // looks for choices from this entity
                 'class' => Photo::class,
                 // uses the User.username property as the visible option string
-                'choice_label' => 'link',
+                'choice_label' => 'link',    ])*/
 
-            ])*/
-            ->add('Creer', SubmitType::class)
+
+            ->add('Envoyer', SubmitType::class)
     ;}
 
     public function configureOptions(OptionsResolver $resolver)

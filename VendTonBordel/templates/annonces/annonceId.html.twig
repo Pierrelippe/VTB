@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Annonces{% endblock %}
+
+{% block body %}
+
+    <div class="container">
+        <div>
+            <ul>
+                <li>
+
+
+                        <div class="card mx-auto col-8 mt-4 my-4 border-primary">
+
+                            <div class="d-inline mt-3">
+                                <a href="/profil/{{ a.user.id }}"><img class="avatarImg d-inline" src='/image/photo/{{ a.user.profilPhoto.link }}'></a>
+                                <p class="d-inline mx-2" style="font-size: 25px;" >{{ a.user.name }}</p>
+                                <p class="d-inline" style="color: #656565; font-size: 13px;">{{ a.date|date('d/m/Y H:i:s') }}</p>
+                            </div>
+                            <div class="mx-auto mt-2">
+                                <h3 class="d-inline mx-4 px-4" style="color: #006cc5"></h3>
+                            </div>
+                            <h1 class="mx-auto card-header mt mb-5 border-bottom border-primary rounded text-center">{{ a.name }}</h1>
+                            <div class="mx-auto">
+                                <label class="d-inline">Description : </label>
+                                <p class="d-inline">{{ a.description}}</p>
+                            </div >
+                            <div class="mx-auto">
+                                <label class="d-inline">Prix : </label>
+                                <p class="d-inline">{{ a.prix}} €</p>
+                            </div>
+                            <div class="mx-auto mb-4">
+                                <label class="d-inline">Categorie : </label>
+                                <p class="d-inline">{{ a.categorie.name}}</p>
+                            </div>
+                            <!-- Photos -->
+                            {% if app.user %}
+                                {% if auth.id== a.user.id %}
+                                    <div class="mx-auto d-inline my-3">
+                                        <a class="btn btn-outline-primary py-2 d-inline" href="/annonces/edit/{{ a.id }}">Modifier</a>
+                                        <a href="/annonces/delete/{{ a.id }}" class="btn btn-outline-primary mx-3">Supprimer</a>
+                                    </div>
+                                {% endif %}
+                            {% endif %}
+                        </div>
+
+                </li>
+            </ul>
+        </div>
+
+
+    </div>
+
+{% endblock %}

@@ -19,7 +19,7 @@ security:
             form_login:
                 login_path: homepage
                 check_path: homepage
-                default_target_path: user_profil
+                default_target_path: annonces
 
             logout:
                 path: security_logout

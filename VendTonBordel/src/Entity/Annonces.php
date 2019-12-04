@@ -39,7 +39,7 @@ class Annonces
     private $date;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Photo", mappedBy="user")
+     * @ORM\OneToMany(targetEntity="App\Entity\Photo", mappedBy="AnnoncePhoto")
      */
     private $photo;
 

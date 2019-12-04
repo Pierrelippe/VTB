@@ -10,6 +10,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+//Permet de modifier les catégories a condition qu'on s'appelle Root. Comme il ne peut y en avoir qu'un, c'est sécurisé
+//Toutes les fonctions et les twig ont été créer automatiquement et reprennent les base pour créer/modifier/supprimer les éléments présent dans la table Categories
 /**
  * @Route("/categories")
  */

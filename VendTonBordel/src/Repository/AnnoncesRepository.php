@@ -19,6 +19,36 @@ class AnnoncesRepository extends ServiceEntityRepository
         parent::__construct($registry, Annonces::class);
     }
 
+
+    /*public function getCategory()
+    {
+        $entityManager = $this->getEntityManager();
+
+        $query = $entityManager->createQuery("SELECT DISTINCT ad.categorie.name, ad.id FROM App\Entity\Annonces ad GROUP BY ad.categorie.name");
+
+        return $query->getResult();
+    }
+
+    public function findAdByCategory(string $category)
+    {
+        $entityManager = $this->getEntityManager();
+
+        $query = $entityManager->createQuery("SELECT ad.categorie FROM App\Entity\Annonces ad WHERE ad.categorie.name LIKE :categoryname"
+        )->setParameter('categoryname', $category);
+
+        return $query->getResult();
+    }
+
+    public function findAdByName(string $name)
+    {
+        $entityManager = $this->getEntityManager();
+
+        $query = $entityManager->createQuery("SELECT ad FROM App\Entity\Annonces ad WHERE ad.name LIKE :searchname"
+        )->setParameter('searchname', '%'.$name.'%');
+
+        return $query->getResult();
+    }*/
+
     // /**
     //  * @return Annonces[] Returns an array of Annonces objects
     //  */
