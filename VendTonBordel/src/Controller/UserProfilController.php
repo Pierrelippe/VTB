@@ -116,10 +116,17 @@ class UserProfilController extends AbstractController
             $file=$photo->getLink();
            // $filename=md5(uniqid()).'.'.$file->guessExtension();
             $filename = pathinfo( $file->getClientOriginalName(), PATHINFO_FILENAME);
+            //On enlève les caractères spéciaux sur le nom du fichir pour éviter les requête SQL
             $safeFilename = preg_replace('/[^A-Za-z0-9]/', "",$filename).'.'.$file->guessExtension();
+            //On indique la direction et le nom du fichier
             $file->move($this->getParameter('photo_directory'),$safeFilename);
+
             $photo->setLink($safeFilename);
             $manager->persist($photo);
+            //On efface l'ancienne photo de la base de donnée
+            $manager->remove($user->getProfilPhoto());
+
+            //On met le lien de la photo dans la variable link
             $user->setProfilPhoto($photo);
             $manager->flush();
             return  $this->redirectToRoute('user_profil');

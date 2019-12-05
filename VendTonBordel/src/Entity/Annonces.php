@@ -125,7 +125,7 @@ class Annonces
     {
         if (!$this->photo->contains($photo)) {
             $this->photo[] = $photo;
-            $photo->setUser($this);
+            $photo->setAnnoncePhoto($this);
         }
 
         return $this;
@@ -136,8 +136,8 @@ class Annonces
         if ($this->photo->contains($photo)) {
             $this->photo->removeElement($photo);
             // set the owning side to null (unless already changed)
-            if ($photo->getUser() === $this) {
-                $photo->setUser(null);
+            if ($photo->getAnnoncePhoto() === $this) {
+                $photo->setAnnoncePhoto(null);
             }
         }
 

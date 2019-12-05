@@ -32,12 +32,22 @@
                     <label class="d-inline">Categorie : </label>
                     <p class="d-inline">{{ a.categorie.name}}</p>
                 </div>
+                {% if a.photo != null  %}
+                    {% for p in a.photo %}
+                <div class="mx-auto mb-4">
+                    <label class="d-inline">Photo : </label>
+                    <img class="d-inline AnnonceImg"  src='/image/photo/{{ p.link }}'>
+                    <a class="btn btn-outline-lights py-2 d-inline" href="/annonces/removePhoto/{{ p.id }}">Supprimer</a>
+                </div>
+                    {% endfor %}
+                {% endif %}
                 <!-- Photos -->
                 {% if app.user %}
                     {% if auth.id== a.user.id %}
                         <div class="mx-auto d-inline my-3">
                             <a class="btn btn-outline-primary py-2 d-inline" href="/annonces/edit/{{ a.id }}">Modifier</a>
-                            <a href="/annonces/delete/{{ a.id }}" class="btn btn-outline-primary mx-3">Supprimer</a>
+                            <a class="btn btn-outline-primary mx-3 py-2 d-inline" href="/annonces/editPhoto/{{ a.id }}">Ajouter Photo</a>
+                            <a href="/annonces/delete/{{ a.id }}" class="btn btn-outline-primary ">Supprimer</a>
                         </div>
                     {% endif %}
                 {% endif %}
@@ -52,7 +62,7 @@
             <button type="button" class="btn btn-outline-primary my-3"  data-toggle="modal" data-target="#newAnnonceModal">Ajouter</button>
             </div>
 
-                <!-- Modal -->
+                <!-- Modal Ajouter une annonce -->
                 <div class="modal fade" id="newAnnonceModal" tabindex="-1" role="dialog" aria-labelledby="newAnnonceModalTitle" aria-hidden="true">
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
@@ -68,6 +78,8 @@
                         </div>
                     </div>
                 </div>
+
+
             {% endif %}
     </div>
 

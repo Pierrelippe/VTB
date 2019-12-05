@@ -13,15 +13,7 @@ class ProfilGestion
 
 
 
-    //Suprimer Profil
-    private function DeleteProfil(EntityManagerInterface $em,$id)
-    {
 
-        $product= $em->getRepository(NameGen::class)->find($id);
-        $em->remove($product);
-        $em->flush();
-        //LOG OUT
-    }
 
 
 

@@ -33,20 +33,14 @@ class AnnoncesType extends AbstractType
                 // uses the User.username property as the visible option string
                 'choice_label' => function($categorie){
                 return $categorie->getName();
-                }
+                } ])
 
-                // used to render a select box, check boxes or radios
-               // 'multiple' => true,
-                // 'expanded' => true,
-
-            ])
-           ->add('phototek',FileType::class, [
-               'mapped' => false,
-           ])
-        /*    ->add('photo',CollectionType::class,  array(
-                'entry_type'   => PhotoType::class,
+           // ->add('phototek',FileType::class, [
+            //    'mapped' => false,
+           // ])
+          /*  ->add('photo',PhotoType::class,  array(
+               ' mapped'=>false
             ))*/
-
         /*EntityType::class,[
                 // looks for choices from this entity
                 'class' => Photo::class,

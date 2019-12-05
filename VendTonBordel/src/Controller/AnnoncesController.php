@@ -3,7 +3,10 @@
 namespace App\Controller;
 
 use App\Entity\Annonces;
+use App\Entity\Photo;
 use App\Form\AnnoncesType;
+use App\Form\PhotoAnnoncesType;
+use App\Form\PhotoType;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -22,7 +25,7 @@ class AnnoncesController extends AbstractController
 
         //On crée une nouvelle annonce
         $annonce=new Annonces();
-        //On crée son formulairs
+        //On crée ses formulairs
         $form = $this->createForm(AnnoncesType::class, $annonce);
         $form->handleRequest($request);
         //Mettre la personne connecté dans une variable pour voir lesquelles sont nos annonces
@@ -41,39 +44,6 @@ class AnnoncesController extends AbstractController
             //On va sur la page des annonces
             return $this->redirectToRoute('annonces');
         }
-
-        //RESEARCH
-/*
-        if (isset($_POST['submit']) AND !empty($_POST['adSearch']))
-        {
-            $nameSearch = htmlspecialchars($_POST['adSearch']);
-        }
-        else
-        {
-            $nameSearch = "";
-        }
-
-        if (isset($_POST['submit']) AND !empty($_POST['category']))
-        {
-            $categorySearch = $_POST['category'];
-        }
-        else
-        {
-            $categorySearch = "";
-        }
-
-        $categories = $this->getDoctrine()->getRepository(Annonces::class)->getCategory();
-
-        if ($categorySearch == "")
-        {
-            $annonces = $this->getDoctrine()->getRepository(Annonces::class)
-                ->findAdByName($nameSearch);
-        }
-        else {
-            $annonces = $this->getDoctrine()->getRepository(Annonces::class)
-                ->findAdByCategory($categorySearch);
-        }*/
-
 
 
         return $this->render('annonces/annonce.html.twig', [
@@ -129,7 +99,7 @@ class AnnoncesController extends AbstractController
 
         if($form->isSubmitted() && $form->isValid())
         {
-            dd($_POST);
+            //dd($_POST);
             //On récupére ce qu'il y a dans le form puis on le met sur la base de donnée
             $artticle=$form->getData();
             $manager->persist($artticle);
@@ -144,9 +114,76 @@ class AnnoncesController extends AbstractController
 
     }
     /**
+     * @Route("/editPhoto/{id}", name="annonces_photo_edit", methods={"GET","POST"})
+     */
+    public function editAnnoncePhoto($id,Request $request,ObjectManager $manager)
+    {
+
+        //Annonce correspondant à l'ID envoyé
+        $annonce=$manager->getRepository(Annonces::class)->find($id);
+        //Une nouvelle photo
+        $photo = new Photo();
+        //User connecté
+        $user=$this->getUser();
+        //form de l'annonce
+        $form = $this->createForm(PhotoType::class, $photo);
+        $form->handleRequest($request);
+
+        //Si l'annonce n'appartient pas à l'utilisateur connecté, alors il est redirigé vers les annonces
+        if($annonce->getUser()->getId() !=$user->getId()){
+            return $this->redirectToRoute('annonces');
+        }
+
+        if($form->isSubmitted() && $form->isValid())
+        {
+            $file=$photo->getLink();
+            $filename = pathinfo( $file->getClientOriginalName(), PATHINFO_FILENAME);
+            $safeFilename = preg_replace('/[^A-Za-z0-9]/', "",$filename).'.'.$file->guessExtension();
+            $file->move($this->getParameter('photo_directory'),$safeFilename);
+            $photo->setLink($safeFilename);
+            $manager->persist($photo);
+            $annonce->addPhoto($photo);
+            $manager->flush();
+            return $this->redirectToRoute('annonces');
+        }
+
+        return $this->render('annonces/createAnnonce.html.twig', [
+            'form' =>  $form->createView(),
+        ]);
+
+    }
+
+    /**
+     * @Route("/removePhoto/{id}", name="annonces_photo_remove")
+     */
+    public function removeAnnoncePhoto($id,ObjectManager $manager)
+    {
+        //Récupére User connecté
+        $user=$this->getUser();
+        //Photo correspondant à l'ID envoyé
+        $photo=$manager->getRepository(Photo::class)->find($id);
+        dump($photo);
+        //On récupére l'annonce correspondant a cette photo
+        $annonce=$photo->getAnnoncePhoto();
+
+
+        //Si l'annonce de la photo n'appartient pas à l'utilisateur connecté, alors il est redirigé vers les annonces
+        if($annonce->getUser()->getId() !=$user->getId()) {
+            return $this->redirectToRoute('annonces');
+        }
+
+        $manager->persist($photo);
+        $annonce->removePhoto($photo);
+        $manager->remove($photo);
+        $manager->flush();
+        return $this->redirectToRoute('annonces');
+
+    }
+
+    /**
      * @Route("/delete/{id}", name="annonces_delete")
      */
-    public function deleteAnnonce($id,Request $request,ObjectManager $manager)
+    public function deleteAnnonce($id,ObjectManager $manager)
     {
         //Annonce correspondant à l'ID envoyé
         $annonce=$manager->getRepository(Annonces::class)->find($id);
