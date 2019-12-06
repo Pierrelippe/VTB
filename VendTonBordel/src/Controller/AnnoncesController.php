@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Annonces;
+use App\Entity\Categories;
 use App\Entity\Photo;
 use App\Form\AnnoncesType;
 use App\Form\PhotoAnnoncesType;
@@ -10,6 +11,8 @@ use App\Form\PhotoType;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use App\Repository\AnnoncesRepository;
+use App\Repository\CategoriesRepository;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -22,7 +25,36 @@ class AnnoncesController extends AbstractController
      */
     public function index( Request $request, ObjectManager $manager )
     {
+        /////SEARCH/////
+        $allcategories = $this->getDoctrine()->getRepository(Categories::class)->getAllCategories();
+        $ads = $this->getDoctrine()->getRepository(Annonces::class)->getAllAds();
 
+        if ((isset($_POST['submit']) AND !empty($_POST['adSearch'])) AND (isset($_POST['submit']) AND !empty($_POST['category'])))
+        {
+            //prendre en compte la catégorie et la barre de recherche
+            $nameSearch = htmlspecialchars($_POST['adSearch']);
+            $categorySearch = $_POST['category'];
+            $category = $this->getDoctrine()->getRepository(Categories::class)->findOneBy(['name' => $categorySearch]);
+            $ads = $this->getDoctrine()->getRepository(Annonces::class)->findAdByNameAndCategory($category, $nameSearch);
+        }
+
+        //sinon
+        //si seulement catégorie
+        elseif (isset($_POST['submit']) AND !empty($_POST['category']))
+        {
+            $categorySearch = $_POST['category'];
+            $category = $this->getDoctrine()->getRepository(Categories::class)->findOneBy(['name' => $categorySearch]);
+            $ads = $category->getRelation();
+        }
+        //si seulement barre de recherche
+        elseif (isset($_POST['submit']) AND !empty($_POST['adSearch']))
+        {
+            $nameSearch = htmlspecialchars($_POST['adSearch']);
+            $ads = $this->getDoctrine()->getRepository(Annonces::class)
+                ->findAdByName($nameSearch);
+        }
+
+        ////ANNONCES////
         //On crée une nouvelle annonce
         $annonce=new Annonces();
         //On crée ses formulairs
@@ -48,14 +80,12 @@ class AnnoncesController extends AbstractController
 
         return $this->render('annonces/annonce.html.twig', [
             //on met toute les annonces dans une variable
-            'annonces' =>  $product = $manager->getRepository(Annonces::class)->findAll(),
+            'annonces' =>  $ads,
             'form' =>  $form->createView(),
             'auth'=> $user,
-          /*  'research.html.twig',
-            array("compteur" => count($annonces),
-                "liste" => $annonces,
-                "listecategories" => $categories
-                )*/
+            "compteur" => count($ads),
+            "listecategories" => $allcategories
+
         ]);
     }
 
@@ -83,7 +113,7 @@ class AnnoncesController extends AbstractController
      */
     public function editAnnonce($id,Request $request,ObjectManager $manager)
     {
-        //dd($_POST);
+
         //Annonce correspondant à l'ID envoyé
         $annonce=$manager->getRepository(Annonces::class)->find($id);
         //User connecté
@@ -162,7 +192,6 @@ class AnnoncesController extends AbstractController
         $user=$this->getUser();
         //Photo correspondant à l'ID envoyé
         $photo=$manager->getRepository(Photo::class)->find($id);
-        dump($photo);
         //On récupére l'annonce correspondant a cette photo
         $annonce=$photo->getAnnoncePhoto();
 

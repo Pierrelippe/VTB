@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Annonces;
+use App\Entity\Categories;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
 
@@ -17,6 +18,46 @@ class AnnoncesRepository extends ServiceEntityRepository
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Annonces::class);
+    }
+
+
+    public function getAllAds()
+    {
+        $qb = $this->createQueryBuilder('a');
+
+        $query = $qb->getQuery();
+
+        return $query->execute();
+    }
+
+    public function findAdByName(string $name)
+    {
+        $entityManager = $this->getEntityManager();
+
+        $query = $entityManager->createQuery("SELECT ad FROM App\Entity\Annonces ad WHERE ad.name LIKE :searchname")
+            ->setParameter('searchname', '%'.$name.'%');
+
+        return $query->getResult();
+    }
+
+    public function findAdByNameAndCategory(Categories $category, string $name)
+    {
+        $entityManager = $this->getEntityManager();
+
+        $query = $entityManager->createQuery("SELECT ad FROM App\Entity\Annonces ad WHERE ad.categorie = :category AND ad.name LIKE :searchname")
+            ->setParameter('category', $category)
+            ->setParameter('searchname', '%'.$name.'%');
+
+        return $query->getResult();
+    }
+    public function findAdByCategory(Categories $category)
+    {
+        $entityManager = $this->getEntityManager();
+
+        $query = $entityManager->createQuery("SELECT ad FROM App\Entity\Annonces ad WHERE ad.categorie = :category")
+            ->setParameter('category', $category);
+
+        return $query->getResult();
     }
 
 

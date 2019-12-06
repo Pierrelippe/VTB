@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Annonces;
+use App\Entity\Categories;
 use App\Form\AnnoncesType;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -15,6 +16,7 @@ use Symfony\Component\Serializer\Serializer;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
+use App\Repository\AnnoncesRepository;
 
 
 /**
@@ -39,16 +41,30 @@ class ApiController extends AbstractController
 
             $jsonContent = $serializer->serialize($data, 'json', ['circular_reference_handler' => function ($object) {
                 return $object->getId();
-            }, AbstractNormalizer::IGNORED_ATTRIBUTES => ['user.annonce']]);
+            },  AbstractNormalizer::ATTRIBUTES => ['user'=>['username'],'name','description','prix','date','user' => ['link']]]);
+            return new JsonResponse($jsonContent);
+        }
+        if(isset($_GET['categorie'])){
+            $category = $this->getDoctrine()->getRepository(Categories::class)->findOneBy(['name' =>  $_GET['categorie']]);
+            $data= $manager->getRepository(Annonces::class)->findAdByCategory($category);
+            $jsonContent = $serializer->serialize($data, 'json', ['circular_reference_handler' => function ($object) {
+                return $object->getId();
+            },  AbstractNormalizer::ATTRIBUTES => ['user'=>['username'],'name','description','prix','date','user' => ['link']]]);
+            return new JsonResponse($jsonContent);
+        }
+        if(isset($_GET['search'])){
+            $data= $manager->getRepository(Annonces::class)->findAdByName($_GET['search']);
+            $jsonContent = $serializer->serialize($data, 'json', ['circular_reference_handler' => function ($object) {
+                return $object->getId();
+            }, AbstractNormalizer::ATTRIBUTES => ['user'=>['username'],'name','description','prix','date','user' => ['link']]]);
+            dump($jsonContent);
             return new JsonResponse($jsonContent);
         }
 
         $data=$manager->getRepository(Annonces::class)->findAll();
-        dump($data);
         $jsonContent = $serializer->serialize($data, 'json', ['circular_reference_handler' => function ($object) {
             return $object->getId();
-        }, AbstractNormalizer::IGNORED_ATTRIBUTES => ['user.annonce']]);
-        dump($jsonContent);
+        }, AbstractNormalizer::ATTRIBUTES => ['user'=>['username'],'name','description','prix','date','user' => ['link']]]);
         return new JsonResponse($jsonContent);
 
     }

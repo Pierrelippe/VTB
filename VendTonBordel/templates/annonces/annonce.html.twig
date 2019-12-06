@@ -9,7 +9,28 @@
         <div class="background_1"></div>
         <div class="background_21  "></div>
         <div class="background_12"></div>
+
+        <!-- SEARCH -->
+<div class="mt-5 ">
+        <form method="post" class=" mx-auto p-2">
+            <select name="category" class="mb-2">
+                <option value="" disabled selected>Choisissez une catégorie</option>
+                {% for category in listecategories %}
+                    <option value="{{ category.name }}"> {{ category.name }}</option>
+                {% endfor %}
+            </select>
+
+
+            <input type="search" class="form-control col-3" name="adSearch" placeholder="Rechercher...">
+            <a href="{{ path('annonces') }}"><button type="submit" name="submit" class="btn btn-primary mt-2">Rechercher</button></a>
+        </form>
+</div>
+
+
+        <!-- ANNONCES -->
+
         <h1 class="mx-auto card-header mt-2 mb-5 border-bottom border-primary rounded text-center">Annonces</h1>
+        <h4 style="text-align: center">Il y a {{ compteur }} annonce(s) disponible(s)</h4>
         {%for a in annonces |sort((a, b) => a.date <=> b.date) | reverse%}
             <div class="card mx-auto col-8 mt-4 my-4 border-primary">
                 <div class="d-inline mt-3">
@@ -35,7 +56,6 @@
                 {% if a.photo != null  %}
                     {% for p in a.photo %}
                 <div class="mx-auto mb-4">
-                    <label class="d-inline">Photo : </label>
                     <img class="d-inline AnnonceImg"  src='/image/photo/{{ p.link }}'>
                     <a class="btn btn-outline-lights py-2 d-inline" href="/annonces/removePhoto/{{ p.id }}">Supprimer</a>
                 </div>
