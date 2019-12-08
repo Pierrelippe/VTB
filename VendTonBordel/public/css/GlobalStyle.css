@@ -24,7 +24,7 @@ li{
 .AnnonceImg
 {
     object-fit: contain;
-    border-radius:50%;
+    border-radius:5%;
     width: 500px;
     heigth: 500px;
 
@@ -39,50 +39,50 @@ li{
 /*  Background  */
 .background_1{
 
-    background-color: #08415c;
+    background-color: rgba(8, 65, 92, 0.6);
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
     z-index: -5;
-    clip-path: polygon(100% 0, 86% 100%, 100% 100%);
+    clip-path: polygon(100% 0, 90% 100%, 100% 100%);
 
 
 }
 .background_2{
-    background-color: #2898cc;
+    background-color: rgba(40, 152, 204, 0.6);
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
     z-index: -10;
-    clip-path: polygon(87% 0, 100% 0, 100% 100%, 94% 100%);
+    clip-path: polygon(95% 0, 100% 0, 100% 100%, 90% 100%);
 
 }
 .background_12{
-    background-color: #08415c;
+    background-color: rgba(8, 65, 92, 0.6);
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
     z-index: -5;
-    clip-path: polygon(0 0, 16% 0, 5% 100%, 0 100%);
+    clip-path: polygon(0 0, 10% 0, 2% 100%, 0 100%);
     background-attachment: fixed;
 
 }
 
 .background_21{
-    background-color: #2898cc;
+    background-color: rgba(40, 152, 204, 0.6);
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
     z-index: -10;
-    clip-path: polygon(0 0, 7% 0, 14% 100%, 0 100%);
+    clip-path: polygon(0 0, 10% 0, 8% 100%, 0 100%);
 
 
 }

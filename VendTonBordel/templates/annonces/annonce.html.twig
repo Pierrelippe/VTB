@@ -35,7 +35,7 @@
             <div class="card mx-auto col-8 mt-4 my-4 border-primary">
                 <div class="d-inline mt-3">
                     <a href="/profil/{{ a.user.id }}"><img class="avatarImg d-inline" src='/image/photo/{{ a.user.profilPhoto.link }}'></a>
-                    <p class="d-inline mx-2" style="font-size: 25px;" >{{ a.user.name }}</p>
+                    <p class="d-inline mx-2" style="font-size: 25px;" >{{ a.user.username }}</p>
                     <p class="d-inline" style="color: #656565; font-size: 13px;">{{ a.date|date('d/m/Y H:i:s') }}</p>
                 </div>
                 <div class="mx-auto mb-3">
@@ -57,7 +57,11 @@
                     {% for p in a.photo %}
                 <div class="mx-auto mb-4">
                     <img class="d-inline AnnonceImg"  src='/image/photo/{{ p.link }}'>
-                    <a class="btn btn-outline-lights py-2 d-inline" href="/annonces/removePhoto/{{ p.id }}">Supprimer</a>
+                    {% if app.user %}
+                        {% if auth.id== a.user.id %}
+                            <a class="btn btn-outline-lights py-2 d-inline" href="/annonces/removePhoto/{{ p.id }}">Supprimer</a>
+                        {% endif %}
+                    {% endif %}
                 </div>
                     {% endfor %}
                 {% endif %}
